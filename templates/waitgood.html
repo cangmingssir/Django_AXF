@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extCss %}
+    <link rel="stylesheet" href="{% static 'selectOrder/css/selectOrder.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/layer.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="selectOrder">
+        <p>
+            <button id='backBtn' class="btn btn-xs btn-info">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
+        <div class="clearfix"></div>
+        {#        {% if data == 1 %}#}
+        {#            <h3><strong>全部订单</strong></h3>#}
+        {#        {% elif data == 2 %}#}
+        {#            <h3><strong>待付款订单</strong></h3>#}
+        {#        {% endif %}#}
+        <h3><strong>待收货订单</strong></h3>
+        </p>
+        <menu class="full">
+            <ul>
+                {% for order in orders %}
+                    <li class="menuList">
+                        {#                        <div class="confirm">#}
+                        {#                                <span class="isChose">#}
+                        {#                                    <span id="{{ card.id }}">#}
+                        {#                                        {% if card.isSelected %}#}
+                        {#                                            √#}
+                        {#                                        {% endif %}#}
+                        {#                                    </span>#}
+                        {#                                </span>#}
+                        {#                        </div>#}
+                        <a href="#">
+                            {# 获取订单第一个商品图片 #}
+                            <img src="{{ order.ordergoogs_set.all.last.goods.productimg }}"/>
+                            <span>订单编号：&nbsp;{{ order.orderNum }}</span><br/>
+                            <span>订单金额：&nbsp;¥{{ order.orderPrice }}</span><br/>
+                            <span>下单时间：&nbsp;{{ order.orderTime }}</span>
+                        </a>
+                        <section>
+                            {% if order.orderState == 0 %}
+                                <span style="text-align: center;color: orange">订单状态：待派送</span><br/>
+                                <a title="{{ order.orderNum }}" class="btn btn-warning toOrder"
+                                   style="margin-right: 0.5rem;">确认收货</a>
+                            {% elif order.orderState == 1 %}
+                                <span style="text-align: center">订单状态：已发货</span><br/>
+                                <a title="{{ order.orderNum }}" class="btn btn-info toOrder"
+                                   style="margin-right: 0.5rem;">确认收货</a>
+                            {% elif order.orderState == 2 %}
+                                <span style="text-align: center;color: green">订单状态：已送达</span><br/>
+                                <a title="{{ order.orderNum }}" class="btn btn-success toOrder"
+                                   style="margin-right: 0.5rem;">确认收货</a>
+                            {% elif order.orderState == 4 %}
+                                <span style="text-align: center;color: red">订单状态：已拒收</span><br/>
+                                <a title="{{ order.orderNum }}" class="btn btn-danger aftersale"
+                                   style="margin-right: 0.5rem;">退货/售后</a>
+                            {% elif order.orderState == 5 %}
+                                <span style="text-align: center;color: red">订单状态：未到达</span><br/>
+                                <a title="{{ order.orderNum }}" class="btn btn-danger aftersale"
+                                   style="margin-right: 0.5rem;">退货/售后</a>
+                            {% endif %}
+                        </section>
+
+                    </li>
+                {% endfor %}
+            </ul>
+        </menu>
+
+    </div>
+
+
+    {# 模态框 #}
+    <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button  type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提示</h4>
+                </div>
+                <div id="payMsg" class="modal-body">
+                    <p>&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="sure" type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endblock %}
+
+
+
+
+{% block extJs %}
+    <script src="{% static 'waitgood/js/waitgood.js' %}"></script>
+    <script src="{% static 'main/js/layer.js' %}"></script>
+{% endblock %}

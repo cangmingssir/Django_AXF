@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extCss %}
+    <link rel="stylesheet" href="{% static 'cart/css/cart.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div id="cart">
+        <h3>我的购物车</h3>
+        <section class="full">
+
+            <section>
+                {#  收货信息 #}
+                <ul>
+                    <li style="border-bottom: 1px solid gray;">
+                        <span style="font-size: 0.35rem;color: dodgerblue">收件地址信息</span><a href="#"></a>
+                        <a href="/app/useraddress">
+                        <span style="font-size: 0.35rem;color: dodgerblue;
+                            margin-left: 5rem;cursor: pointer;">选择收件地址</span></a>
+
+                    </li>
+                    <li>
+                        <div class="clear">
+                            <p class="infoJustify"><strong>收件人: </strong></p>
+                            <p><span>{{ myAddress.name }}</span></p>
+                        </div>
+                        <div class="clear">
+                            <p class="infoJustify"><strong>手机号: </strong></p>
+                            <p><span>{{ myAddress.phone }}</span></p>
+                        </div>
+                        <div class="clear">
+                            <p class="infoJustify"><strong>收件地址: </strong></p>
+                            <p><span>{{ myAddress.address_detail }}</span></p>
+                        </div>
+                    </li>
+                </ul>
+
+                <section class="bill">
+                    <p>闪送超市</p>
+                    <p>¥0起送,22:00前满¥30免运费</p>
+                    <a>凑单专区</a>
+                </section>
+
+
+                <section class="delivery">
+                    <span>收货时间</span>
+                    <span>一小时送达</span>
+                    <a>可预订&gt;</a>
+                </section>
+
+                <section class="delivery">
+                    <span>收货备注</span>
+                    <input type="text"
+                           name="noteText"
+                           placeholder="可输入20字以内特殊要求内容"/>
+                </section>
+
+                {#   购物车中物品  #}
+                <menu>
+                    <ul>
+                        {% for card in cards %}
+
+                            <li class="menuList">
+                                <div class="confirm">
+                                <span class="isChose">
+                                    <span id="{{ card.id }}">
+                                        {% if card.isSelected %}
+                                            √
+                                        {% endif %}
+                                    </span>
+                                </span>
+                                </div>
+                                <a href="#">
+                                    <img src="{{ card.goods.productimg }}"/>
+                                    <p>&nbsp;{{ card.goods.productname }}</p>
+                                    <span>&nbsp;¥{{ card.goods.marketprice }}</span>
+                                </a>
+                                <section>
+                                    <button class="subShopping"><span>-</span></button>
+                                    <span title="{{ card.id }}">{{ card.cnt }}</span>
+                                    <button class="addShopping"><span>+</span></button>
+                                </section>
+
+                            </li>
+                        {% endfor %}
+                        <li class="payTheBill">
+                            <div class="confirm">
+                            <span id="allChose">
+                                <span></span>
+                            </span>
+                            </div>
+                            <p><span>全选</span><span>共计:</span><span id="totalPrice">{{ totalprice }}</span></p>
+
+                        </li>
+                        <li style="background-color:white;text-align: right;">
+                            {#                            <a id="selectOrder" class="btn btn-primary " style="float: left;margin-top:32px;">所有订单</a>#}
+                            <a id="toOrder" class="btn btn-info" style="margin: 0.5rem;">立即支付</a>
+                        </li>
+                    </ul>
+                </menu>
+            </section>
+
+        </section>
+
+    </div>
+
+{% endblock %}
+
+{% block extJs %}
+    <script src="{% static 'cart/js/cart.js' %}"></script>
+{% endblock %}

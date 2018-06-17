@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extCss %}
+    <link rel="stylesheet" href="{% static 'selectOrder/css/selectOrder.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="selectOrder">
+        <p>
+            <button id='backBtn' class="btn btn-xs btn-info">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
+        <div class="clearfix"></div>
+        {% if data == 1 %}
+            <h3><strong>全部订单</strong></h3>
+        {% elif data == 2 %}
+            <h3><strong>待付款订单</strong></h3>
+        {% endif %}
+
+        </p>
+        <menu class="full">
+            <ul>
+                {% for order in orders %}
+                    <li class="menuList">
+                        {#                        <div class="confirm">#}
+                        {#                                <span class="isChose">#}
+                        {#                                    <span id="{{ card.id }}">#}
+                        {#                                        {% if card.isSelected %}#}
+                        {#                                            √#}
+                        {#                                        {% endif %}#}
+                        {#                                    </span>#}
+                        {#                                </span>#}
+                        {#                        </div>#}
+                        <a href="#">
+                            {# 获取订单第一个商品图片 #}
+                            <img src="{{ order.ordergoogs_set.all.last.goods.productimg }}"/>
+                            <span>订单编号：&nbsp;{{ order.orderNum }}</span><br/>
+                            <span>订单金额：&nbsp;¥{{ order.orderPrice }}</span><br/>
+                            <span>下单时间：&nbsp;{{ order.orderTime }}</span>
+                        </a>
+                        <section>
+                            {% if order.payState == 0 %}
+                                <a title="{{ order.orderNum }}" class="btn btn-info toOrder"
+                                   style="margin-right: 0.5rem;">立即支付</a>
+                            {% else %}
+                                <a class="btn btn-primary" style="margin-right: 0.5rem;">已完成交易</a>
+                            {% endif %}
+                        </section>
+
+                    </li>
+                {% endfor %}
+            </ul>
+        </menu>
+
+    </div>
+
+{% endblock %}
+
+
+
+
+{% block extJs %}
+    <script src="{% static 'selectOrder/js/selectOrder.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extCss %}
+    <link rel="stylesheet" href="{% static 'mine/css/login.css' %}">
+{% endblock %}
+{% block extJs %}
+    <script type="text/javascript" src="{% static 'mine/js/login.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="login">
+        <div>
+            <a href="/app/"  class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span>返回主页</a>
+            <a href="register" style="float: right" class="btn btn-default">注册<span class="glyphicon glyphicon-chevron-right"></span></a>
+        </div>
+
+        <hr style="height:1px;border:none;border-top:1px solid #555555;"/>
+        <div id="box">
+            <form action="login" method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <span class="input-group-addon">账号</span>
+                    <input  name="number" type="text" title="账号不能为空" class="form-control"
+                           placeholder="账号长度为6到11位" aria-describedby="basic-addon1">
+                </div>
+                <p class="error">账号不能为空</p>
+                <div class="input-group" style="margin-top: 10px">
+                    <span class="input-group-addon">密码</span>
+                    <input  name="passwd" type="password" title="密码不能为空" class="form-control"
+                           placeholder="密码长度为6到16位" aria-describedby="basic-addon1">
+                </div>
+                <p class="error">密码不能为空</p>
+                <div class="input-group" style="margin: auto;margin-top: 0.8rem">
+                    <button type="button" class="btn btn-primary" onclick="submitForm()">登录</button>
+                    {#                    <button class="btn-link" style="margin-left: 10px">已有用户登录</button>#}
+                </div>
+            </form>
+            {% if error %}
+                <h2>{{ error }}</h2>
+            {% endif %}
+{#        {% if error %}#}
+{#            <script>#}
+{#                    $(function () {#}
+{#                        if(confirm('{{ error }}')){#}
+                            {#window.opener.doucument.location.reload();#}
+{#                        }#}
+{##}
+{#                    })#}
+{#            </script>#}
+{#        {% endif %}#}
+
+
+        </div>
+    </div>
+
+
+
+{% endblock %}

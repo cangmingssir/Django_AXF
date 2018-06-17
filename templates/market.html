@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extCss %}
+    <link rel="stylesheet" href="{% static 'market/css/market.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/layer.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+    <div id="market">
+        {# 左侧的导航 #}
+        <aside>     {# <aside> 标签是 HTML 5 的新标签。<aside> 的内容可用作文章的侧栏。 #}
+
+            <ul>
+                {% for foodType in foodTypes %}
+
+                    <li><a href="/app/market/{{ foodType.typeid }}/0/0">
+                        {% if categoryid == foodType.typeid %}
+                            <span class="yellowSlide"></span>
+                        {% endif %}
+                        {{ foodType.typename }}</a></li>
+                {% endfor %}
+            </ul>
+
+        </aside>
+        {# 右侧内容 #}
+        <section>
+            <nav>
+                <ul>
+                    <li><strong id="allType">全部类型&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-up"
+                                                                   style="font-weight: 100"></span></strong></li>
+                    <li><strong id="goodsSort">综合排序&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-up"
+                                                                     style="font-weight: 100"></span></strong></li>
+                </ul>
+            </nav>
+            <menu>
+                {# ul-li 显示商品 #}
+
+                <ul>
+                    {% for good in goodsList %}
+                        <li>
+                            <a href="#">
+                                <img src="{{ good.productimg }}">
+                                <article class="shoppingInfo">
+                                    <h6>{{ good.productlongname }}</h6>
+                                    <p class="detailTag"><span>精选</span><span>{{ good.storenums }}</span></p>
+                                    <span class="unit">{{ good.specifics }}</span>
+                                    <p class="price"><span>¥{{ good.price }}</span><s>
+                                        <span>{{ good.marketprice }}</span></s></p>
+                                </article>
+                                <div class="clearfix"></div>
+                            </a>
+                            <section>
+{#                                {% if foodTypes %}#}
+{#                                #}
+{#                                {% endif %}#}
+                                <span></span>
+                                <button class="addShopping" title="{{ good.productid }}"><span style="margin-bottom: 20px">+</span></button>
+                            </section>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+                <div id="typeSortDiv">
+                    <div id="typeDiv">
+                        {% for childType in childTypes %}
+                            <a href="/app/market/{{ categoryid }}/{{ childType.id }}/0">
+                                {% ifequal childType.id childcid %}
+                                    <span class="selected">
+                                {% else %}
+                                    <span>
+                                {% endifequal %}
+                                {{ childType.name }}</span></a>
+                        {% endfor %}
+                    </div>
+                    <div id="sortDiv">
+{#                        {% for sid in sortid %}#}
+{#                            <a href="/app/market/{{ categoryid }}/{{ childcid }}/{{ sid }}">#}
+{#                            #}
+{#                        {% endfor %}#}
+
+
+
+                        <a href="/app/market/{{ categoryid }}/{{ childcid }}/1">
+                            {% if sortid == 1 %}
+                                <span class="selected">
+                            {% else %}
+                                <span>
+                            {% endif %}
+                            最高价格</span>
+                        </a>
+                        <a href="/app/market/{{ categoryid }}/{{ childcid }}/2">
+                            {% if sortid == 2 %}
+                                <span class="selected">
+                            {% else %}
+                                <span>
+                            {% endif %}
+                            最低价格</span>
+                        </a>
+                        <a href="/app/market/{{ categoryid }}/{{ childcid }}/3">
+                            {% if sortid == 3 %}
+                                <span class="selected">
+                            {% else %}
+                                <span>
+                            {% endif %}
+                            销量最高</span>
+                        </a>
+                    </div>
+                </div>
+            </menu>
+        </section>
+    </div>
+{% endblock %}
+
+{% block extJs %}
+    <script src="{% static 'market/js/market.js' %}"></script>
+    <script src="{% static 'main/js/layer.js' %}"></script>
+{% endblock %}

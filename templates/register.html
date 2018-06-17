@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extCss %}
+    <link rel="stylesheet" href="{% static 'mine/css/register.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div id="register">
+    <div id="header" style="margin-bottom: 10px">
+        <a href="mine" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span>返回</a>
+    </div>
+    <hr style="height:1px;border:none;border-top:1px solid #555555;"/>
+    <h2 style="text-align: center;margin-bottom: 10px"><strong>用户注册</strong></h2>
+<form class="form-horizontal" method="post" action="register">
+    {% csrf_token %}
+    <div class="input-group">
+        <span class="input-group-addon">账号</span>
+        <input  name="number" type="text" title="账号" class="form-control" placeholder="账号长度为6到11位" >
+    </div>
+    <span class="error">账号不能为空</span>
+    <br/>
+    <div class="input-group">
+        <span class="input-group-addon">密码</span>
+        <input  name="passwd" type="password" title="密码" class="form-control" placeholder="密码长度为6到16位">
+    </div>
+    <span class="error"></span>
+    <br/>
+    <div class="input-group">
+        <span class="input-group-addon">再次输入</span>
+        <input  name="passwd2" type="password" title="验证密码" class="form-control" placeholder="密码长度为6到11位" >
+    </div>
+    <span class="error"></span>
+    <br/><div class="input-group">
+        <span class="input-group-addon">昵称</span>
+        <input  name="username" type="text" title="昵称" class="form-control" placeholder="昵称长度最大6位" >
+    </div>
+    <span class="error"></span>
+    <br/>
+    <div class="input-group">
+        <span class="input-group-addon">地址</span>
+        <input  name="useraddress" type="text" title="地址" class="form-control" >
+    </div>
+    <span class="error"></span>
+    <br/>
+    <div class="input-group">
+        <span class="input-group-addon">电话</span>
+        <input  name="phone" type="text" title="电话" class="form-control" placeholder="请输入长度11位的有效号码" >
+        <span class="input-group-addon" id="sendSmcode">发送验证码</span>
+    </div>
+    <span class="error"></span>
+    <br/>
+    <div class="input-group">
+        <span class="input-group-addon">验证码</span>
+        <input  name="smscode" style="width: 5rem" title="验证码" type="text" class="form-control" placeholder="请输入验证码">
+    </div>
+    <span class="error"></span>
+    <br/>
+
+{#    <div class="input-group">#}
+{#        <span class="input-group-addon">头像</span>#}
+{#        <input id="accunt" type="file" class="form-control"  aria-describedby="basic-addon1">#}
+{#    </div>#}
+{#    <br/>#}
+    <div class="input-group" style="margin: auto">
+        <button type="button" class="btn btn-primary" onclick="submitForm()">注册</button >
+        <a href="login" class="btn-link" style="margin-left: 10px">已有用户登录</a>
+    </div>
+
+
+</form>
+</div>
+{% endblock %}
+
+{% block extJs %}
+    <script type="text/javascript" src="{% static 'mine/js/register.js' %}"></script>
+{% endblock %}

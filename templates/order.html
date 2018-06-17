@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extCss %}
+    <link rel="stylesheet" href="{% static 'order/css/order.css' %}">
+{% endblock %}
+{% block content %}
+    <div id="order">
+        <p>
+            <button id='backBtn' class="btn btn-xs btn-info">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
+        <div class="clearfix"></div>
+        <h3><strong>我的订单</strong></h3>
+        </p>
+
+        <div>
+            <section class="orderInfo">
+                <p><strong>订单金额:</strong><span style="color: red;margin-left: 10px">&nbsp;¥{{ order.orderPrice }}</span>
+                </p>
+                <p><strong>收货信息:</strong><br/>
+                    <span style="margin-left: 10px">
+                        <span style="color: #6c69ff;font-weight: bold">address:</span>{{ order.orderAddress.address_detail }}</span><br/>
+                    <span style="margin-left: 10px"><span
+                            style="color: #6c69ff;font-weight: bold">username:</span>{{ order.user.username }}</span><br/>
+                    <span style="margin-left: 10px"><span
+                            style="color: #6c69ff;font-weight: bold">tel:</span>{{ order.user.userphone }}</span>
+                </p>
+            </section>
+
+            <menu id="orderGoods">
+                <ul>
+                    {% for orderitem in order.ordergoogs_set.all %}
+
+                        <li>
+                            <dl>
+                                <dt>
+                                    <img src="{{ orderitem.goods.productimg }}">
+                                </dt>
+                                <dd>
+                                    {{ orderitem.goods.productname|truncatechars:8 }} {# truncatechars截断字符 #}
+                                </dd>
+                            </dl>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </menu>
+
+            <section id="payBtnDiv" title="{{ order.orderNum }}">
+                <button title="0" class="btn btn-primary">余额支付</button>
+                <button title="1" class="btn btn-info">支付宝</button>
+                <button title="2" class="btn btn-success">微信支付</button>
+            </section>
+        </div>
+
+        <div class="modal fade in" tabindex="1" role="dialog" id="myModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">提示</h4>
+                    </div>
+                    <div id="payMsg" class="modal-body">
+                        <p>&hellip;</p>
+                    </div>
+{#                    <div class="modal-footer">#}
+{#                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                        <button type="button" class="btn btn-primary">Save changes</button>#}
+{#                    </div>#}
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+
+{% block extJs %}
+    <script src="{% static 'order/js/order.js' %}"></script>
+{% endblock %}

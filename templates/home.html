@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+{#导入自定义的css样式#}
+{% block extCss %}
+    <link rel="stylesheet" href="{% static 'home/css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="home">
+        {# 头部的轮播 #}
+        <section class="swiper-container" id="topSwiper">
+            <div class="swiper-wrapper">
+                {% for topWheel in topWheels %}
+                    <div class="swiper-slide">
+                        <img src="{{ topWheel.img }}">
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+            <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"></div>
+        </section>
+
+        {# topMenu顶部菜单 #}
+        <section class="topMenu">
+            <nav>   {# 导航标签 #}
+                <ul>
+                    {% for topMenu in topMenus %}
+                        <li>
+                            <a href="#">
+                                <img src="{{ topMenu.img }}">
+                                <span>{{ topMenu.name }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+
+            <menu class="swiper-container" id="swiperMenu">
+                <ul class="swiper-wrapper">
+                    {% for topMustBuy in topMustBuys %}
+                        <li class="swiper-slide">
+                            <a><img src="{{ topMustBuy.img }}"></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </menu>
+        </section>
+
+        {# 热销榜，及分类 #}
+        <section class="CVS">
+            <h2>
+                <img src="{{ topshop1.img }}" alt="{{ topshop1.name }}">
+            </h2>
+
+            <fieldset>
+                {% for i in topshop2 %}
+                    <a href="#">
+                        <img src="{{ i.img }}" alt="{{ i.name }}">
+                    </a>
+                {% endfor %}
+                <ul>
+                    {% for x in topshop3 %}
+                        <li>
+                            <a href="#">
+                                <img src="{{ x.img }}" alt="{{ x.name }}">
+                                <span>{{ x.name }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <ol>
+                    {% for y in topshop4 %}
+                        <li><a href="#"><img src="{{ y.img }}" alt="{{ y.name }}"></a></li>
+                    {% endfor %}
+
+                </ol>
+
+            </fieldset>
+        </section>
+
+        <section class="mainInfo">
+            {% for topMainShow in topMainShows %}
+                <section>
+                    <h3>
+                        {{ topMainShow.name }}
+                        <a href="#">更多</a>
+                        <span></span>
+                    </h3>
+                    <div>
+                        <a href="#"><img src="{{ topMainShow.img }}" alt="{{ topMainShow.name }}"></a>
+                    </div>
+                    <ul>
+                        {% for topmainchild in topMainShow.topmainchild_set.all %}
+
+                            <li>
+                                <a href="#">
+                                    <img src="{{ topmainchild.img }}">
+                                    <span class="description">{{ topmainchild.longname }}</span>
+                                    <span>¥{{ topmainchild.price }}</span>
+                                    <s>¥{{ topmainchild.marketprice }}</s>
+                                </a>
+                                <button><span>&#43;</span></button>
+                            </li>
+                        {% endfor %}
+                        {#                        <li>#}
+                        {#                            <a href="#">#}
+                        {#                                <img src="{{ topMainShow.img2 }}">#}
+                        {#                                <span class="description">{{ topMainShow.longname2 }}</span>#}
+                        {#                                <span>¥{{ topMainShow.price2 }}</span>#}
+                        {#                                <s>¥{{ topMainShow.marketprice2 }}</s>#}
+                        {#                            </a>#}
+                        {#                            <button><span>&#43;</span></button>#}
+                        {#                        </li>#}
+                        {#                        <li>#}
+                        {#                            <a href="#">#}
+                        {#                                <img src="{{ topMainShow.img3 }}">#}
+                        {#                                <span class="description">{{ topMainShow.longname3 }}</span>#}
+                        {#                                <span>¥{{ topMainShow.price3 }}</span>#}
+                        {#                                <s>¥{{ topMainShow.marketprice3 }}</s>#}
+                        {#                            </a>#}
+                        {#                            <button><span>+</span></button>#}
+                        {#                        </li>#}
+                    </ul>
+                </section>
+            {% endfor %}
+
+        </section>
+        <div class="clearfix" style="height: 1.7rem"></div>
+    </div>
+
+{% endblock %}
+
+{#导入自定义的js文件#}
+{% block extJs %}
+    <script src="{% static 'home/js/home.js' %}"></script>
+{% endblock %}

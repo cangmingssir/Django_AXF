@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extCss %}
+    <link rel="stylesheet" href="{% static 'useraddress/css/useraddress.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/layer.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div id="selectOrder">
+        <p>
+            <button id='backBtn' class="btn btn-xs btn-info">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
+        <div class="clearfix"></div>
+        {#        {% if data == 1 %}#}
+        {#            <h3><strong>全部订单</strong></h3>#}
+        {#        {% elif data == 2 %}#}
+        {#            <h3><strong>待付款订单</strong></h3>#}
+        {#        {% endif %}#}
+        <h3><strong>收货地址管理</strong></h3>
+        </p>
+        </p>
+        <menu class="full">
+            <ul>
+                {% for address in deliveryAddress %}
+                    <li class="menuList">
+                        <div class="confirm">
+                            <span id="allChose">
+                                <span>
+                                {% if address.only == 1 %}
+                                    √
+                                {% endif %}
+                                </span>
+                            </span>
+                        </div>
+                        <a href="#" style="margin-top: 20px;margin-left: 10px;">
+                            {#                            <img src="{{ order.ordergoogs_set.all.last.goods.productimg }}"/>#}
+                            <span>收货人：&nbsp;{{ address.name }}</span><br/>
+                            <span>联系电话：&nbsp;{{ address.phone }}</span><br/>
+                            <span>收货地址：&nbsp;{{ address.address_detail }}</span>
+                        </a>
+                        <section style="margin-top: 1rem">
+                            <a title="{{ address.id }}" class="btn btn-info toOrder"
+                               style="margin-right: 0.5rem;">编辑</a>
+                            <a title="{{ address.id }}" class="btn btn-primary adreDelete"
+                               style="margin-right: 0.5rem;">删除</a>
+                            <a title="{{ address.id }}" class="btn btn-success defaultad"
+                               style="">设为默认</a>
+                        </section>
+
+                    </li>
+                {% endfor %}
+            </ul>
+        </menu>
+
+    </div>
+
+
+    {# 模态框 #}
+    <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">提示</h4>
+                </div>
+                <div id="payMsg" class="modal-body">
+                    <p>&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button id="sure" type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+{% endblock %}
+
+
+
+
+{% block extJs %}
+    <script src="{% static 'useraddress/js/useraddress.js' %}"></script>
+    <script src="{% static 'main/js/layer.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extCss %}
+    <link rel="stylesheet" href="{% static 'mine/css/mine.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/layer.css' %}">
+{% endblock %}
+{% block extJs %}
+    <script src="{% static 'mine/js/mine.js' %}"></script>
+    <script src="{% static 'main/js/layer.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <input type="file" id="file" onchange="upload(this.files[0])" style="display: none">
+    <div id="mine">
+        <section class="fixed">
+
+            <span id="imgspan"
+                  {% if not loginuser.userphoto %}
+                    class="glyphicon glyphicon-user"
+                  {% endif %}
+
+                  onclick="file.click()">
+                <img id="userImg" src="/static/upload/{{ loginuser.userphoto.name }}"></span>
+            <p style="margin-top: 10px"><a href="#">
+                {% if loginuser %}
+                    {{ loginuser.username }}
+                {% else %}
+                    {{ username }}
+                {% endif %}
+            </a></p>
+            <p style="margin-top: 0.2rem"><span class="glyphicon glyphicon-fire"></span><span>等级</span></p>
+            {% if loginuser %}
+                <a></a>
+            {% else %}
+                <a id="regis" href="register">注册</a>
+
+            {% endif %}
+            <p><span class="glyphicon glyphicon-heart"></span>MY收藏</p>
+        </section>
+
+        <section class="my">
+            <p>
+                <span>我的订单</span><a id="selectOrder">查看全部订单</a>
+            </p>
+            <nav id="nav">
+                <ul>
+                    {% for nav in navs %}
+                        <li>
+                            <a>
+                                <dl id="{{ nav.id }}" class="waitnav">
+                                    <dt><span class="{{ nav.icon }}"></span></dt>
+                                    <dd>{{ nav.name }}</dd>
+                                </dl>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+
+            <menu>
+                <ul>
+                    {% for menu in menus %}
+                        <li>
+                            <a>
+                                <dl id="{{ menu.id }}" class="menuid">
+                                    <dt><span class="{{ menu.icon }}"></span></dt>
+                                    <dd>{{ menu.name }}</dd>
+                                </dl>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </menu>
+            <p><a href="delectToken">退出当前账户</a></p>
+        </section>
+    </div>
+{% endblock %}
