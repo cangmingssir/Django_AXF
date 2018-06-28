@@ -11,6 +11,7 @@ function showError(msg, isUser) {
     //设置input-group 存在错误
     //addClass添加样式，removeClass移除样式
     $(this.parentElement).addClass('has-error');    //设置input样式，输入框变红
+    this.value='';  //如果出现错误，清空输入框数据
     // this.focus()
     $(this).focus(function () {
         $(errorp).fadeOut();
